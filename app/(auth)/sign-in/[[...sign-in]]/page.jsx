@@ -70,8 +70,9 @@ export default function Page() {
           quibusdam aperiam voluptatum.
         </p>
       </div>
-
-      <SignIn path="/sign-in" />
+      <div className="m-5">
+        <SignIn path="/sign-in"/>
+      </div>
     </div>
   </main>
 </div>
