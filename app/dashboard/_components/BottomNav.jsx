@@ -3,7 +3,7 @@ import { usePathname } from 'next/navigation'
 import React, { useEffect } from 'react'
 import CreateForm from './CreateForm';
 
-function Sidenav() {
+function BottomNav() {
     const MenuList = [
         {
             id: 1,
@@ -38,10 +38,17 @@ function Sidenav() {
 
     return (
         <div>
-            <div className='h-screen border shadow-md'>
-                <div className='p-5'>
+            <div className='border shadow-md fixed bottom-0 left-0 w-full'>
+                <div className='px-6 border py-2'>
+                    <div className='w-full'>
+                    <h2 className='text-xl font-extrabold font-mono'>Progress</h2>
+                        <progress className="progress w-full h-3 progress-secondary" value={50} max="100"></progress>
+                        <h2 className='text-sm mt-2 text-gray-600'><strong>2 </strong>out of <strong>3 </strong>fiie Created.. </h2>
+                    </div>
+                </div>
+                <div className='p-3 flex items-center justify-evenly'>
                     {MenuList.map((menu, idx) => (
-                        <h2 key={idx} className={`flex items-center gap-3 p-4 mb-3 text-gray-500 hover:bg-primary hover:text-white rounded-lg cursor-pointer
+                        <h2 key={idx} className={`flex flex-col items-center p-4 text-gray-500 hover:bg-primary hover:text-white rounded-lg cursor-pointer
                             ${path === menu.path && 'bg-primary text-white'}
                             `}>
                             <menu.icon />
@@ -50,18 +57,9 @@ function Sidenav() {
                     ))
                     }
                 </div>
-                {/*Progress hidden in small screen */}
-                <div className='fixed bottom-6 p-6 w-64'>
-                    <CreateForm/>
-                    <div className='w-52 my-5'>
-                        <progress className="progress h-4 progress-secondary" value={50} max="100"></progress>
-                        <h2 className='text-sm mt-2 text-gray-600'><strong>2 </strong>out of <strong>3 </strong>fiie Created.. </h2>
-                        <h2 className='text-xs mt-3 text-gray-600'>Upgrade your plan for unlimited AI form Builder </h2>
-                    </div>
-                </div>
             </div>
         </div>
     )
 }
 
-export default Sidenav
+export default BottomNav
