@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import React from 'react'
 
 function Hero() {
@@ -24,12 +25,12 @@ function Hero() {
                         </p>
 
                         <div className="mt-8 flex flex-wrap gap-4 text-center">
-                            <a
-                                href="#"
+                            <Link
+                                href="/dashboard"
                                 className="block w-full rounded bg-primary px-12 py-3 text-sm font-medium text-white shadow hover:bg-purple-900 focus:outline-none focus:ring active:bg-purple-500 sm:w-auto"
                             >
                                 + Create AI Form
-                            </a>
+                            </Link>
 
                             <a
                                 href="#"

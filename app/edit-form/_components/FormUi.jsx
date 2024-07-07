@@ -6,14 +6,14 @@ const FormUi = ({ jsonForm }) => {
   return (
     <div className='border p-5 rounded-lg'>
       <h2 className='font-bold text-center text-2xl'>{jsonForm?.formTitle}</h2>
-      <h2 className='text-sm text-gray-400 text-center'>{jsonForm?.formSubheading}</h2>
+      <h2 className='text-sm text-gray-400 text-center'>{jsonForm?.formSubheading || jsonForm?.formSubHeading}</h2>
 
       {jsonForm?.formFields?.map((field, idx) => (
         <div>
           <div className='my-3' key={idx}>
             <label className="form-control w-full max-w-xs">
               <div className="label">
-                <span className="label-text">{field?.fieldLabel}{field.required ? <span className='text-red-500 font-bold'>*</span> : <span></span>}</span>
+                <span className="label-text font-mono font-bold">{field?.fieldLabel}{field.required ? <span className='text-red-500 font-bold'> *</span> : <span></span>}</span>
               </div>
               {(field?.fieldType === 'select') ?
                 <div>
@@ -55,23 +55,32 @@ const FormUi = ({ jsonForm }) => {
                               type='radio'
                               value= {option.value}
                               className="radio" />
-                            <span className="label-text ml-3">{option.label}</span>
+                            <span className="label-text ml-3">{option}</span>
                           </label>
                         ))}
                       </div>
                       :
                     (field?.fieldType === 'checkbox') ?
                       <div>
-                        {field?.options?.map((option, idx) => (
-                          <label key={idx} className="label cursor-pointer">
+                        {field?.options ? field?.options?.map((option, idx) => (
+                          <label key={idx} className="label cursor-pointer flex justify-start ">
                             <input
-                              name={option?.label}
+                              name={option}
                               type='checkbox'
-                              value= {option.value}
+                              value= {option}
                               className="checkbox checkbox-sm" />
-                            <span className="label-text ml-3">{option.label}</span>
+                            <span className="label-text ml-3">{option}</span>
                           </label>
-                        ))}
+                        )) :
+                        <label className="label cursor-pointer flex justify-start ">
+                          <input
+                            name={field?.fieldName}
+                            type='checkbox'
+                            value= {field?.fieldName}
+                            className="checkbox checkbox-sm" />
+                          <span className="label-text ml-3">{field?.fieldLabel}</span>
+                        </label>
+                      }
                       </div>
                       :
                       <div>
