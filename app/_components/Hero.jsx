@@ -32,12 +32,12 @@ function Hero() {
                                 + Create AI Form
                             </Link>
 
-                            <a
+                            <Link
                                 href="#"
                                 className="block w-full rounded bg-white px-12 py-3 text-sm font-medium text-primary shadow hover:text-purple-900 focus:outline-none focus:ring active:text-purple-500 sm:w-auto"
                             >
                                 Learn More
-                            </a>
+                            </Link>
                         </div>
                     </div>
                 </div>

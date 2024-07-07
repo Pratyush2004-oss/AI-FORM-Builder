@@ -10,6 +10,7 @@ import { useRouter } from 'next/navigation'
 import FormUi from '../_components/FormUi'
 
 
+
 const EditForm = ({ params }) => {
   const { user } = useUser();
   const [jsonForm, SaveJsonForm] = useState();
@@ -38,7 +39,7 @@ const EditForm = ({ params }) => {
         </div>
 
         {/* Form */}
-        <div className='md:col-span-2 border p-5 rounded-lg flex items-center justify-center'>
+        <div className='md:col-span-2 border p-5 rounded-lg flex items-center bg-slate-100 justify-center'>
           <FormUi jsonForm = {jsonForm}/>
         </div>
       </div>
