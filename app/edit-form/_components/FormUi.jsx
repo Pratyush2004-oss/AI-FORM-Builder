@@ -3,17 +3,18 @@
 import React from 'react'
 import FormEdit from './FormEdit'
 
-function FormUi({ jsonForm, onFieldUpdate, deleteField }) {
+function FormUi({ jsonForm, onFieldUpdate, deleteField, selectedTheme }) {
 
   return (
-    <div className='border p-5 rounded-lg md:w-[600px] bg-white'>
+    <div className='p-5 rounded-lg md:w-[600px]' data-theme={selectedTheme}
+    >
       <h2 className='font-bold text-center text-2xl'>{jsonForm?.formTitle}</h2>
       <h2 className='text-sm text-gray-400 text-center'>{jsonForm?.formSubheading || jsonForm?.formSubHeading}</h2>
 
       {jsonForm?.formFields?.map((field, idx) => (
         <div className='my-3' key={idx}>
           <label className="w-full">
-            <div className="label">
+            <div className="label relative">
               <span className="label-text font-mono font-bold">{field.fieldLabel}{(field.required || field.isRequired) && <span className='text-red-500 font-bold'> *</span>}</span>
               <div>
                 <FormEdit
@@ -80,14 +81,11 @@ function FormUi({ jsonForm, onFieldUpdate, deleteField }) {
                             <span className="label-text ml-3">{option}</span>
                           </label>
                         )) :
-                          <label className="label cursor-pointer justify-start ">
-                            <input
-                              name={field.fieldName}
-                              type='checkbox'
-                              value={field.fieldName}
-                              className="checkbox checkbox-sm" />
-                            <span className="label-text ml-3">{field.fieldLabel}</span>
-                          </label>
+                          <input
+                            name={field.fieldName}
+                            type='checkbox'
+                            value={field.fieldName}
+                            className="checkbox checkbox-sm" />
                         }
                       </div>
                       :

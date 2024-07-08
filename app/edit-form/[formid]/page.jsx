@@ -8,6 +8,7 @@ import { useUser } from '@clerk/nextjs'
 import { ArrowLeft } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import FormUi from '../_components/FormUi'
+import Controller from '../_components/Controller'
 import toast from 'react-hot-toast'
 
 
@@ -18,6 +19,12 @@ const EditForm = ({ params }) => {
   const router = useRouter();
   const [updateTrigger, setUpdateTrigger] = useState();
   const [record, setRecord] = useState([]);
+
+  {/* Theme Controller */ }
+  const [selectedTheme, setSelectedTheme] = useState('light');
+
+  {/* BackGround Selector */}
+  const [selectedBackground,setSelectedBackground] = useState('')
 
   useEffect(() => {
     user && getFormData();
@@ -44,24 +51,23 @@ const EditForm = ({ params }) => {
   }
 
   const updateJsonForminDB = async () => {
-    const result = await db.update(JsonForms)
-      .set({
-        jsonform: jsonForm
-      }).where(and(eq(JsonForms.id, record.id),
-        eq(JsonForms.createdBy, user?.primaryEmailAddress?.emailAddress)))
+    const result = await db.update(JsonForms).set({
+      jsonform: jsonForm
+    }).where(and(eq(JsonForms.id, record.id),
+      eq(JsonForms.createdBy, user?.primaryEmailAddress?.emailAddress)))
 
     toast.custom((t) => (
-      <div
+      <div data-theme="luxury"
         className={`${t.visible ? 'animate-enter' : 'animate-leave'
-          } max-w-md w-full bg-white shadow-lg rounded-lg pointer-events-auto flex ring-1 ring-black ring-opacity-5`}
+          } max-w-md w-full shadow-lg rounded-lg pointer-events-auto flex ring-1 ring-black ring-opacity-5`}
       >
-        <div className="flex-1 w-0 p-4">
-          <div className="flex items-start">
+        <div className="flex-1 w-0 p-4" >
+          <div className="flex items-center">
             <div className="ml-3 flex-1">
-              <p className="text-lg font-mono text-green-700 font-Bold">
-                HURRY !!
+              <p className="text-xl font-mono text-green-500 font-Bold">
+                HURRY !
               </p>
-              <p className="mt-1 text-gray-500">
+              <p className="mt-1 text-yellow-500">
                 Successfully Updated !!
               </p>
             </div>
@@ -75,9 +81,7 @@ const EditForm = ({ params }) => {
     const result = jsonForm.formFields.filter((item, idx) => idx != indextoRemove)
     jsonForm.formFields = result;
     setUpdateTrigger(Date.now())
-
   }
-
   return (
     <div className='p-5'>
       <h2 className='btn btn-ghost my-2 hover:font-bold' onClick={() => router.back()}>
@@ -86,13 +90,19 @@ const EditForm = ({ params }) => {
       <div className='grid grid-cols-1 md:grid-cols-3 gap-5'>
         {/* Controller */}
         <div className='p-5 border rounded-lg shadow-md'>
-          Controller
+          <Controller 
+          selectedTheme={(value)=>setSelectedTheme(value)}
+          selectedBackground={(value) => setSelectedBackground(value)}
+          />
         </div>
 
         {/* Form */}
-        <div className='md:col-span-2 border p-5 rounded-lg flex items-center bg-slate-100 justify-center'>
+        <div className='md:col-span-2 border p-5 rounded-lg flex items-center justify-center'
+        style={{backgroundImage:selectedBackground}}
+        >
           <FormUi
             jsonForm={jsonForm}
+            selectedTheme={selectedTheme}
             onFieldUpdate={onFieldUpdate}
             deleteField={(idx) => deleteField(idx)}
           />
