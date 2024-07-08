@@ -36,7 +36,7 @@ const CreateForm = () => {
     return (
         <div>
             <button className="btn w-full btn-secondary" onClick={() => setOpenDialog(true)}> <h5>+ Create Form</h5></button>
-            <dialog id="my_modal_3" className="modal" open={openDialog}>
+            <dialog className="modal" open={openDialog}>
                 <div className="modal-box">
                     <form method="dialog">
                         {/* if there is a button in form, it will close the modal */}

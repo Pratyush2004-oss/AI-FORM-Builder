@@ -3,7 +3,8 @@
 import React from 'react'
 import FormEdit from './FormEdit'
 
-const FormUi = ({ jsonForm }) => {
+function FormUi({ jsonForm, onFieldUpdate, deleteField }) {
+
   return (
     <div className='border p-5 rounded-lg md:w-[600px] bg-white'>
       <h2 className='font-bold text-center text-2xl'>{jsonForm?.formTitle}</h2>
@@ -15,7 +16,11 @@ const FormUi = ({ jsonForm }) => {
             <div className="label">
               <span className="label-text font-mono font-bold">{field.fieldLabel}{(field.required || field.isRequired) && <span className='text-red-500 font-bold'> *</span>}</span>
               <div>
-                <FormEdit defaultValue={field} />
+                <FormEdit
+                  defaultValue={field}
+                  onUpdate={(value) => onFieldUpdate(value, idx)}
+                  deleteField={() => deleteField(idx)}
+                />
               </div>
             </div>
             {(field.fieldType == 'select') ?
@@ -96,8 +101,8 @@ const FormUi = ({ jsonForm }) => {
                           className="input input-bordered w-full" />
                       </div>
             }
-            </label>
-            </div>
+          </label>
+        </div>
       ))}
     </div>
   )

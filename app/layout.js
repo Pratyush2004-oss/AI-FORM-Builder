@@ -2,6 +2,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import Header from "./_components/Header";
 import { ClerkProvider } from "@clerk/nextjs";
+import { Toaster } from "react-hot-toast";
 
 
 const inter = Inter({ subsets: ["latin"] });
@@ -17,7 +18,12 @@ export default function RootLayout({ children }) {
       <html lang="en" data-theme="light">
         <body className={inter.className}>
           <Header />
-          {children}</body>
+          {children}
+          <Toaster
+            position="top-center"
+            reverseOrder={true}
+          />
+        </body>
       </html>
     </ClerkProvider>
   );
