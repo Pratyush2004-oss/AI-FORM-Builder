@@ -3,10 +3,11 @@
 import React from 'react'
 import FormEdit from './FormEdit'
 
-function FormUi({ jsonForm, onFieldUpdate, deleteField, selectedTheme }) {
+function FormUi({ jsonForm, onFieldUpdate, deleteField, selectedTheme, selectedStyle }) {
 
   return (
     <div className='p-5 rounded-lg md:w-[600px]' data-theme={selectedTheme}
+      style={{ border: { selectedStyle } }}
     >
       <h2 className='font-bold text-center text-2xl'>{jsonForm?.formTitle}</h2>
       <h2 className='text-sm text-gray-400 text-center'>{jsonForm?.formSubheading || jsonForm?.formSubHeading}</h2>
@@ -25,9 +26,9 @@ function FormUi({ jsonForm, onFieldUpdate, deleteField, selectedTheme }) {
               </div>
             </div>
             {(field.fieldType == 'select') ?
-              <div className='my-3'>
+              <div >
                 <select className="select w-full select-bordered">
-                  <option className='' disabled selected>{field.placeholder}</option>
+                  <option disabled selected>{field.placeholder}</option>
                   {field?.options?.map((option, idx) => (
                     <option key={idx} value={option}>{option}</option>
                   ))}
@@ -35,7 +36,7 @@ function FormUi({ jsonForm, onFieldUpdate, deleteField, selectedTheme }) {
               </div>
               :
               (field.fieldType == 'file') ?
-                <div className='my-3'>
+                <div >
                   <input
                     name={field.fieldName}
                     required={field.required}
@@ -45,7 +46,7 @@ function FormUi({ jsonForm, onFieldUpdate, deleteField, selectedTheme }) {
                 </div>
                 :
                 (field.fieldType == 'textarea') ?
-                  <div className='my-3'>
+                  <div >
                     <textarea
                       name={field.fieldName}
                       required={field.required}
@@ -56,7 +57,7 @@ function FormUi({ jsonForm, onFieldUpdate, deleteField, selectedTheme }) {
                   </div>
                   :
                   (field.fieldType == 'radio') ?
-                    <div className='my-3'>
+                    <div>
                       {field?.options.map((option, idx) => (
                         <label key={idx} className="label cursor-pointer justify-start">
                           <input
@@ -70,7 +71,7 @@ function FormUi({ jsonForm, onFieldUpdate, deleteField, selectedTheme }) {
                     </div>
                     :
                     (field.fieldType == 'checkbox') ?
-                      <div className='my-3'>
+                      <div >
                         {field?.options ? field?.options.map((option, idx) => (
                           <label key={idx} className="label cursor-pointer justify-start ">
                             <input
@@ -89,7 +90,7 @@ function FormUi({ jsonForm, onFieldUpdate, deleteField, selectedTheme }) {
                         }
                       </div>
                       :
-                      <div classname='my-3'>
+                      <div>
                         <input
                           name={field.fieldName}
                           required={field.required}
@@ -102,6 +103,7 @@ function FormUi({ jsonForm, onFieldUpdate, deleteField, selectedTheme }) {
           </label>
         </div>
       ))}
+      <button className='btn btn-primary'>Submit</button>
     </div>
   )
 }
