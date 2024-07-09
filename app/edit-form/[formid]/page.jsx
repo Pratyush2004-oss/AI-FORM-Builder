@@ -5,11 +5,12 @@ import { db } from '../../../config'
 import { and, eq } from 'drizzle-orm'
 import { JsonForms } from '../../../config/schema'
 import { useUser } from '@clerk/nextjs'
-import { ArrowLeft, Eye, Share } from 'lucide-react'
+import { ArrowLeft, Eye } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import FormUi from '../_components/FormUi'
 import Controller from '../_components/Controller'
 import toast from 'react-hot-toast'
+import Link from 'next/link'
 
 
 
@@ -123,18 +124,20 @@ const EditForm = ({ params }) => {
 
   return (
     <div className='p-5'>
-      <div className='flex justify-between'>
+      <div className='flex justify-between items-center'>
         <h2 className='btn btn-ghost my-2 hover:font-bold' onClick={() => router.back()}>
           <ArrowLeft /> Back
         </h2>
         <div className='flex gap-3 '>
-          <h2 className='btn btn-ghost my-2 hover:font-bold' onClick={() => router.back()}>
-            Preview
-            <Eye/>
-          </h2>
-          <h2 className='btn btn-secondary my-2 hover:font-bold' onClick={() => router.back()}>
-          Share 
-            <img src='/Share.png' alt='share' width={20} height={20}></img>
+          <Link href={'/aiform/'+record.id} target='_blank'>
+            <h2 className='btn btn-outline btn-secondary my-2 hover:font-bold'>
+              Live Preview
+              <Eye />
+            </h2>
+          </Link>
+          <h2 className='btn btn-success my-2 hover:font-bold' onClick={() => router.back()}>
+            Share
+            <img src='/Share.png' alt='share' width={15} height={15}></img>
           </h2>
         </div>
 

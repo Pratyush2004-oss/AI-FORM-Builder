@@ -3,11 +3,14 @@
 import React from 'react'
 import FormEdit from './FormEdit'
 
-function FormUi({ jsonForm, onFieldUpdate, deleteField, selectedTheme, selectedStyle }) {
+function FormUi({ jsonForm, onFieldUpdate, deleteField, selectedTheme, selectedStyle, editable = true }) {
 
   return (
     <div className='p-5 rounded-lg md:w-[600px]' data-theme={selectedTheme}
-      style={{ border: { selectedStyle } }}
+      style={{
+        boxShadow: selectedStyle?.key == 'boxshadow' && '5px 5px 0px black',
+        border: selectedStyle?.key == 'border' && selectedStyle.value
+      }}
     >
       <h2 className='font-bold text-center text-2xl'>{jsonForm?.formTitle}</h2>
       <h2 className='text-sm text-gray-400 text-center'>{jsonForm?.formSubheading || jsonForm?.formSubHeading}</h2>
@@ -18,11 +21,13 @@ function FormUi({ jsonForm, onFieldUpdate, deleteField, selectedTheme, selectedS
             <div className="label relative">
               <span className="label-text font-mono font-bold">{field.fieldLabel}{(field.required || field.isRequired) && <span className='text-red-500 font-bold'> *</span>}</span>
               <div>
-                <FormEdit
-                  defaultValue={field}
-                  onUpdate={(value) => onFieldUpdate(value, idx)}
-                  deleteField={() => deleteField(idx)}
-                />
+                {editable &&
+                  <FormEdit
+                    defaultValue={field}
+                    onUpdate={(value) => onFieldUpdate(value, idx)}
+                    deleteField={() => deleteField(idx)}
+                  />
+                }
               </div>
             </div>
             {(field.fieldType == 'select') ?
@@ -103,7 +108,7 @@ function FormUi({ jsonForm, onFieldUpdate, deleteField, selectedTheme, selectedS
           </label>
         </div>
       ))}
-      <button className='btn btn-primary'>Submit</button>
+      <button className='btn rounded-full btn-primary'>Submit</button>
     </div>
   )
 }

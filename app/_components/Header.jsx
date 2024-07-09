@@ -3,11 +3,16 @@
 import { UserButton, useUser } from '@clerk/nextjs'
 import Image from 'next/image'
 import Link from 'next/link'
-import React from 'react'
+import { usePathname } from 'next/navigation'
+import React, { useEffect } from 'react'
 
 const Header = () => {
     const { user, isSignedIn } = useUser();
-    return (
+    const path = usePathname();
+    useEffect(() => {
+
+    }, [path])
+    return (!path.includes('aiform')) && (
         <div className='p-3 border shadow-sm'>
             <div className='flex items-center justify-between'>
                 <Image src={'/AI-FORM LOGO.png'} alt='logo' width={100} height={100} className='rounded-full ' />
