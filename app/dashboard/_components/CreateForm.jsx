@@ -7,7 +7,7 @@ import { JsonForms } from '../../../config/schema'
 import moment from 'moment'
 import { useRouter } from 'next/navigation'
 
-const PROMPT = ' , On the basis of description please give form in json format with form title, form subheading with form having form field, form name, placeholder name, and form label, fieldtype and field required in JSON format'
+const PROMPT = " , On the basis of description please give form in json format with 'formTitle', 'formsubheading' with form having 'formfield' having 'fieldname', 'placeholder', 'fieldlabel', 'fieldtype' and 'required' in JSON format"
 const CreateForm = () => {
     const [openDialog, setOpenDialog] = useState(false);
     const [userInput, setUserInput] = useState('');

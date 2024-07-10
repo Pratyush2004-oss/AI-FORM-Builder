@@ -34,6 +34,7 @@ const LiveAIForm = ({ params }) => {
                 selectedStyle={JSON.parse(record.style)}
                 selectedTheme={record.theme}
                 editable={false}
+                formID={record.id}
             />
             }
             <Link href={process.env.NEXT_PUBLIC_BASE_URL}

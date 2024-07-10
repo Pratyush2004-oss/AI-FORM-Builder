@@ -5,12 +5,13 @@ import { db } from '../../../config'
 import { and, eq } from 'drizzle-orm'
 import { JsonForms } from '../../../config/schema'
 import { useUser } from '@clerk/nextjs'
-import { ArrowLeft, Eye } from 'lucide-react'
+import { ArrowLeft, Eye, Share2 } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import FormUi from '../_components/FormUi'
 import Controller from '../_components/Controller'
 import toast from 'react-hot-toast'
 import Link from 'next/link'
+import { RWebShare } from 'react-web-share'
 
 
 
@@ -129,16 +130,25 @@ const EditForm = ({ params }) => {
           <ArrowLeft /> Back
         </h2>
         <div className='flex gap-3 '>
-          <Link href={'/aiform/'+record.id} target='_blank'>
+          <Link href={'/aiform/' + record.id} target='_blank'>
             <h2 className='btn btn-outline btn-secondary my-2 hover:font-bold'>
               Live Preview
               <Eye />
             </h2>
           </Link>
-          <h2 className='btn btn-success my-2 hover:font-bold' onClick={() => router.back()}>
-            Share
-            <img src='/Share.png' alt='share' width={15} height={15}></img>
-          </h2>
+          <RWebShare
+            data={{
+              text: jsonForm?.formSubheading,
+              url: process.env.NEXT_PUBLIC_BASE_URL + 'aiform/' + record.id,
+              title: jsonForm?.title,
+            }}
+            onClick={() => console.log("shared successfully!")}
+          >
+            <h2 className='btn btn-success my-2 hover:font-bold'>
+              Share
+              <img src='/Share.png' alt='share' width={15} height={15}></img>
+            </h2>
+          </RWebShare>
         </div>
 
       </div>

@@ -15,7 +15,7 @@ const DashboardLayout = ({ children }) => {
                 <div className=' md:ml-64'>
                     {children}
                 </div>
-                <div className='md:hidden mb-0'>
+                <div className='md:hidden mb-0 z-20'>
                 <BottomNav/>
                 </div>
             </div>
