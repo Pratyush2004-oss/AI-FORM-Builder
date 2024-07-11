@@ -15,7 +15,9 @@ const Header = () => {
     return (!path.includes('aiform')) && (
         <div className='p-3 border shadow-sm'>
             <div className='flex items-center justify-between'>
-                <Image src={'/AI-FORM LOGO.png'} alt='logo' width={100} height={100} className='rounded-full ' />
+            <Link href={'/'}>
+            <Image src={'/AI-FORM LOGO.png'} alt='logo' width={100} height={100} className='rounded-full ' />
+            </Link>
                 {isSignedIn ?
                     <div className='flex items-center gap-5'>
                         <Link href={'/dashboard'}>

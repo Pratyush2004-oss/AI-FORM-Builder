@@ -136,19 +136,21 @@ const EditForm = ({ params }) => {
               <Eye />
             </h2>
           </Link>
-          <RWebShare
-            data={{
-              text: jsonForm?.formSubheading,
-              url: process.env.NEXT_PUBLIC_BASE_URL + 'aiform/' + record.id,
-              title: jsonForm?.title,
-            }}
-            onClick={() => console.log("shared successfully!")}
-          >
-            <h2 className='btn btn-success my-2 hover:font-bold'>
-              Share
-              <img src='/Share.png' alt='share' width={15} height={15}></img>
-            </h2>
-          </RWebShare>
+          {jsonForm &&
+            <RWebShare
+              data={{
+                text: jsonForm?.formSubheading,
+                url: process.env.NEXT_PUBLIC_BASE_URL + 'aiform/' + record.id,
+                title: jsonForm.title,
+              }}
+              onClick={() => console.log("shared successfully!")}
+            >
+              <h2 className='btn btn-success my-2 hover:font-bold'>
+                Share
+                <img src='/Share.png' alt='share' width={15} height={15}></img>
+              </h2>
+            </RWebShare>
+          }
         </div>
 
       </div>

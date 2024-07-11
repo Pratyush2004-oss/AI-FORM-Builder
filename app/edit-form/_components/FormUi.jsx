@@ -8,7 +8,7 @@ import moment from 'moment';
 import toast from 'react-hot-toast';
 import { usePathname } from 'next/navigation';
 
-function FormUi({ jsonForm, onFieldUpdate, deleteField, selectedTheme, selectedStyle, editable = true, formID }) {
+function FormUi({ jsonForm, onFieldUpdate, deleteField, selectedTheme, selectedStyle, editable = true, formID = 0 }) {
 
   {/* PathNAme Impport */}
   const path = usePathname();
