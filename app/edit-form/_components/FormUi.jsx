@@ -10,7 +10,7 @@ import { usePathname } from 'next/navigation';
 
 function FormUi({ jsonForm, onFieldUpdate, deleteField, selectedTheme, selectedStyle, editable = true, formID = 0 }) {
 
-  {/* PathNAme Impport */}
+  {/* PathNAme Impport */ }
   const path = usePathname();
 
   const [formData, setFormData] = useState();
@@ -73,7 +73,7 @@ function FormUi({ jsonForm, onFieldUpdate, deleteField, selectedTheme, selectedS
         </div>
       ))
     }
-    else{
+    else {
       toast.error('Internal Server Error')
     }
   }
@@ -83,7 +83,7 @@ function FormUi({ jsonForm, onFieldUpdate, deleteField, selectedTheme, selectedS
     <form
       ref={(e) => formRef = e}
       className='p-5 rounded-lg md:w-[600px]' data-theme={selectedTheme}
-      onSubmit={!path.includes('edit-form') ? onFormSubmit : (e)=>e.preventDefault()}
+      onSubmit={!path.includes('edit-form') ? onFormSubmit : (e) => e.preventDefault()}
       style={{
         boxShadow: selectedStyle?.key == 'boxshadow' && '5px 5px 0px black',
         border: selectedStyle?.key == 'border' && selectedStyle.value
@@ -117,7 +117,9 @@ function FormUi({ jsonForm, onFieldUpdate, deleteField, selectedTheme, selectedS
                   {field?.options?.map((option, idx) => (
                     <option
                       key={idx}
-                      value={option | option.value}>{option | option.label}</option>
+                      value={option.value ? option.value : option}>
+                      {option.label ? option.label : option}
+                    </option>
                   ))}
                 </select>
               </div>
@@ -153,9 +155,9 @@ function FormUi({ jsonForm, onFieldUpdate, deleteField, selectedTheme, selectedS
                             onClick={(v) => handleSelectChange(field.fieldName, v.target.value)}
                             name={field.fieldName}
                             type='radio'
-                            value={option.value}
+                            value={option.value ? option.value : option}
                             className="radio" />
-                          <span className="label-text ml-3">{option.label}</span>
+                          <span className="label-text ml-3">{option.label ? option.label : option}</span>
                         </label>
                       ))}
                     </div>
@@ -167,12 +169,12 @@ function FormUi({ jsonForm, onFieldUpdate, deleteField, selectedTheme, selectedS
                             key={idx} className="label cursor-pointer justify-start ">
                             <input
                               required={field.required}
-                              onChange={(v) => handleCheckboxChange(field?.fieldLabel, option?.label, v.target.value)}
+                              onChange={(v) => handleCheckboxChange(field?.fieldLabel, option?.label ? option.label : option, v.target.value)}
                               name={field?.fieldLabel}
                               type='checkbox'
                               value='true'
                               className="checkbox checkbox-sm" />
-                            <span className="label-text ml-3">{option?.label}</span>
+                            <span className="label-text ml-3">{option.label ? option.label : option}</span>
                           </label>
                         )) :
                           <div className='flex gap-3'>

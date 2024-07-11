@@ -3,7 +3,7 @@ import { Edit, Share2, Trash2 } from 'lucide-react'
 import Link from 'next/link'
 import React, { useState } from 'react'
 import { db } from '../../../config';
-import { JsonForms } from '../../../config/schema';
+import { JsonForms, userResponse } from '../../../config/schema';
 import { and, eq } from 'drizzle-orm';
 import { RWebShare } from 'react-web-share';
 import toast from 'react-hot-toast';
@@ -18,7 +18,10 @@ const FormItem = ({ jsonform, formRecord, refreshData }) => {
             .where(and(eq(JsonForms.id, formRecord.id),
                 eq(JsonForms.createdBy, user?.primaryEmailAddress?.emailAddress)))
 
-        if (result) {
+        const result1 = await db.delete(userResponse)
+            .where(eq(userResponse.formRef, JsonForms.id))
+
+        if (result && result1) {
             toast.custom((t) => (
                 <div data-theme="luxury"
                     className={`${t.visible ? 'animate-enter' : 'animate-leave'
