@@ -58,7 +58,7 @@ function BottomNav() {
                         {formList &&
                             <div>
                                 <progress className="progress w-full h-3 progress-secondary" value={(formList.length) / 10 * 100} max="100"></progress>
-                                <h2 className='text-sm mt-2 text-gray-600'><strong>{formList.length} </strong>out of <strong>15 </strong>fiie Created.. </h2>
+                                <h2 className='text-sm mt-2 text-gray-600'><strong>{formList.length} </strong>out of <strong>10 </strong>fiie Created.. </h2>
                             </div>
                         }
                     </div>
