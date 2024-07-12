@@ -25,7 +25,7 @@ const Responses = () => {
                 <h2 className='text-2xl font-bold'>Responses </h2>
             </div>
 
-            <div className='px-10 grid grid-cols-2 md:grid-cols-3 gap-5'>
+            <div className='px-10 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5'>
                 {formList.map((form, idx) => (
                     <FormListItemResp
                         formRecord={form}
