@@ -1,3 +1,5 @@
+'use client'
+
 import { useUser } from '@clerk/nextjs';
 import { Edit, Share2, Trash2 } from 'lucide-react'
 import Link from 'next/link'
@@ -13,15 +15,17 @@ const FormItem = ({ jsonform, formRecord, refreshData }) => {
     const [openDialog, setOpenDialog] = useState(false);
     const { user } = useUser();
     {/* Delete Form Functionality */ }
-    const onDeleteForm = async () => {
+    const onDeleteForm = async (columnName) => {
+
+        await db.update(userResponse).set({
+            [columnName] : 0
+        }).where(eq(userResponse.formRef,formRecord.id))
+
         const result = await db.delete(JsonForms)
             .where(and(eq(JsonForms.id, formRecord.id),
                 eq(JsonForms.createdBy, user?.primaryEmailAddress?.emailAddress)))
 
-        const result1 = await db.delete(userResponse)
-            .where(eq(userResponse.formRef, JsonForms.id))
-
-        if (result && result1) {
+        if (result) {
             toast.custom((t) => (
                 <div data-theme="luxury"
                     className={`${t.visible ? 'animate-enter' : 'animate-leave'
@@ -52,7 +56,10 @@ const FormItem = ({ jsonform, formRecord, refreshData }) => {
                         <div className='flex gap-3 justify-end'>
                             <button className='btn btn-outline btn-error' onClick={() => setOpenDialog(false)}>Cancel</button>
                             <button className='btn btn-primary'
-                                onClick={() => onDeleteForm() & setOpenDialog(false)}
+                                onClick={() => {
+                                    onDeleteForm('formRef')
+                                    setOpenDialog(false)
+                                }}
                             >Continue</button>
                         </div>
                     </div>

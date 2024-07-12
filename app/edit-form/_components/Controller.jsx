@@ -3,7 +3,7 @@ import Themes from '../../_Data/Themes'
 import Gradient from '../../_Data/Gradient'
 import Style from '../../_Data/Style'
 
-const Controller = ({ selectedTheme, selectedBackground, selectedStyle }) => {
+const Controller = ({ selectedTheme, selectedBackground, selectedStyle, setSigninEnable  }) => {
     const [showMore, setShowMore] = useState(6);
 
     return (
@@ -63,6 +63,17 @@ const Controller = ({ selectedTheme, selectedBackground, selectedStyle }) => {
                     </div>
                 ))}
             </div>
+
+            {/* User have to sign in to fill the form */}
+            <div className='flex gap-3 my-10 items-center'>
+                            <input
+                            onChange={(e) => setSigninEnable(e.target.checked)}
+                              name='checkbox'
+                              type='checkbox'
+                              value={true}
+                              className="checkbox checkbox-sm" />
+                            <label><h2>Enable Social Authentication before submit the form</h2></label>
+                          </div>
 
         </div>
     )

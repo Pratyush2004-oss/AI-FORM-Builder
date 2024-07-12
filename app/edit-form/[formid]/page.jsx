@@ -70,24 +70,26 @@ const EditForm = ({ params }) => {
       eq(JsonForms.createdBy, user?.primaryEmailAddress?.emailAddress)))
       .returning({ id: JsonForms.id })
 
-    toast.custom((t) => (
-      <div data-theme="luxury"
-        className={`${t.visible ? 'animate-enter' : 'animate-leave'
-          } max-w-md w-full shadow-lg rounded-lg pointer-events-auto flex ring-1 ring-black ring-opacity-5`}
-      >
+    if (result) {
+      toast.custom((t) => (
+        <div data-theme="luxury"
+          className={`${t.visible ? 'animate-enter' : 'animate-leave'
+            } max-w-md w-full shadow-lg rounded-lg pointer-events-auto flex ring-1 ring-black ring-opacity-5`}
+        >
 
-        <div className="flex p-4 items-center">
-          <div className="ml-3 flex-1">
-            <p className="text-xl font-mono text-green-500 font-Bold">
-              🔥 HURRY Successfully Updated !! 🔥
-            </p>
-            <p className="mt-1 text-yellow-500">
-              Form fields has been updated Successfully !
-            </p>
+          <div className="flex p-4 items-center">
+            <div className="ml-3 flex-1">
+              <p className="text-xl font-mono text-green-500 font-Bold">
+                🔥 HURRY Successfully Updated !! 🔥
+              </p>
+              <p className="mt-1 text-yellow-500">
+                Form fields has been updated Successfully !
+              </p>
+            </div>
           </div>
         </div>
-      </div>
-    ))
+      ))
+    }
   }
 
   const deleteField = (indextoRemove) => {
@@ -169,6 +171,10 @@ const EditForm = ({ params }) => {
             selectedStyle={(value) => {
               updateControllerFields(value, 'style');
               setSelectedStyle(value)
+            }}
+            setSigninEnable={(value) => {
+              updateControllerFields(value, 'enableSignIn');
+              
             }}
           />
         </div>

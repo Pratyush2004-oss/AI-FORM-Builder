@@ -1,8 +1,11 @@
 import { LibraryBig, LineChart, MessagesSquare, Shield } from 'lucide-react'
 import { usePathname } from 'next/navigation'
-import React, { useEffect } from 'react'
-import CreateForm from './CreateForm';
+import React, { useEffect, useState } from 'react'
 import Link from 'next/link';
+import { db } from '../../../config';
+import { JsonForms } from '../../../config/schema';
+import { desc, eq } from 'drizzle-orm';
+import { useUser } from '@clerk/nextjs';
 
 function BottomNav() {
     const MenuList = [
@@ -32,19 +35,32 @@ function BottomNav() {
         },
     ]
 
+    const { user } = useUser();
+    const [formList, setFormList] = useState();
     const path = usePathname();
     useEffect(() => {
+        user && getFormList();
+    }, [user])
 
-    }, [path])
+    const getFormList = async () => {
+        const result = await db.select().from(JsonForms)
+            .where(eq(JsonForms.createdBy, user?.primaryEmailAddress?.emailAddress))
+            .orderBy(desc(JsonForms.id));
+        setFormList(result)
+    }
 
     return (
         <div>
-            <div className='border shadow-md fixed bottom-0 left-0 w-full bg-white'>
+            <div className='border shadow-md sticky bottom-0 left-0 w-full bg-white'>
                 <div className='px-6 border py-2'>
                     <div className='w-full'>
-                    <h2 className='text-xl font-extrabold font-mono'>Progress</h2>
-                        <progress className="progress w-full h-3 progress-secondary" value={50} max="100"></progress>
-                        <h2 className='text-sm mt-2 text-gray-600'><strong>2 </strong>out of <strong>3 </strong>fiie Created.. </h2>
+                        <h2 className='text-xl font-extrabold font-mono'>Progress</h2>
+                        {formList &&
+                            <div>
+                                <progress className="progress w-full h-3 progress-secondary" value={(formList.length) / 10 * 100} max="100"></progress>
+                                <h2 className='text-sm mt-2 text-gray-600'><strong>{formList.length} </strong>out of <strong>15 </strong>fiie Created.. </h2>
+                            </div>
+                        }
                     </div>
                 </div>
                 <div className='p-3 flex items-center justify-evenly'>

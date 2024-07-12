@@ -16,7 +16,7 @@ export default function RootLayout({ children }) {
   return (
     <ClerkProvider>
       <html lang="en" data-theme="light">
-        <body className={inter.className}>
+        <body className={`min-h-screen ${inter.className}`}>
           <Header />
           {children}
           <Toaster

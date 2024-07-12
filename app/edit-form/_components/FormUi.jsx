@@ -7,11 +7,16 @@ import { userResponse } from '../../../config/schema';
 import moment from 'moment';
 import toast from 'react-hot-toast';
 import { usePathname } from 'next/navigation';
+import { SignInButton, useUser } from '@clerk/nextjs';
 
-function FormUi({ jsonForm, onFieldUpdate, deleteField, selectedTheme, selectedStyle, editable = true, formID = 0 }) {
+function FormUi({ jsonForm, onFieldUpdate, deleteField, selectedTheme, selectedStyle, editable = true, formID = 0, enableSignin }) {
+  console.log(enableSignin)
 
   {/* PathNAme Impport */ }
   const path = usePathname();
+
+  {/* Checking for the user to signin */ }
+  const { user, isSignedIn } = useUser();
 
   const [formData, setFormData] = useState();
   let formRef = useRef();
@@ -80,133 +85,150 @@ function FormUi({ jsonForm, onFieldUpdate, deleteField, selectedTheme, selectedS
 
 
   return (
-    <form
-      ref={(e) => formRef = e}
-      className='p-5 rounded-lg md:w-[600px]' data-theme={selectedTheme}
-      onSubmit={!path.includes('edit-form') ? onFormSubmit : (e) => e.preventDefault()}
-      style={{
-        boxShadow: selectedStyle?.key == 'boxshadow' && '5px 5px 0px black',
-        border: selectedStyle?.key == 'border' && selectedStyle.value
-      }}
-    >
-      <h2 className='font-bold text-center text-2xl'>{jsonForm?.formTitle}</h2>
-      <h2 className='text-sm text-gray-400 text-center'>{jsonForm?.formSubheading}</h2>
+    <div>
+      <form
+        ref={(e) => formRef = e}
+        className='p-5 rounded-lg md:w-[600px]' data-theme={selectedTheme}
+        onSubmit={!path.includes('edit-form') ? onFormSubmit : (e) => e.preventDefault()}
+        style={{
+          boxShadow: selectedStyle?.key == 'boxshadow' && '5px 5px 0px black',
+          border: selectedStyle?.key == 'border' && selectedStyle.value
+        }}
+      >
+        <h2 className='font-bold text-center text-2xl'>{jsonForm && (jsonForm?.formTitle).toUpperCase()}</h2>
+        <h2 className='text-sm text-gray-400 text-center'>{jsonForm?.formSubheading}</h2>
 
-      {jsonForm?.formFields?.map((field, idx) => (
-        <div className='my-3' key={idx}>
-          <label className="w-full">
-            <div className="label relative">
-              <span className="label-text font-mono font-bold">{field.fieldLabel}{(field.required) && <span className='text-red-500 font-bold'> *</span>}</span>
-              <div>
-                {editable &&
-                  <FormEdit
-                    defaultValue={field}
-                    onUpdate={(value) => onFieldUpdate(value, idx)}
-                    deleteField={() => deleteField(idx)}
-                  />
-                }
+        {jsonForm?.formFields?.map((field, idx) => (
+          <div className='my-3' key={idx}>
+            <label className="w-full">
+              <div className="label relative">
+                <span className="label-text font-mono font-bold">{field.fieldLabel}{(field.required) && <span className='text-red-500 font-bold'> *</span>}</span>
+                <div>
+                  {editable &&
+                    <FormEdit
+                      defaultValue={field}
+                      onUpdate={(value) => onFieldUpdate(value, idx)}
+                      deleteField={() => deleteField(idx)}
+                    />
+                  }
+                </div>
               </div>
-            </div>
-            {(field.fieldType == 'select') ?
-              <div >
-                <select
-                  onChange={(v) => handleSelectChange(field.fieldName, v.target.value)}
-                  required={field.fieldType}
-                  className="select w-full select-bordered">
-                  <option disabled selected>{field.placeholder}</option>
-                  {field?.options?.map((option, idx) => (
-                    <option
-                      key={idx}
-                      value={option.value ? option.value : option}>
-                      {option.label ? option.label : option}
-                    </option>
-                  ))}
-                </select>
-              </div>
-              :
-              (field.fieldType == 'file') ?
+              {(field.fieldType == 'select') ?
                 <div >
-                  <input
-                    name={field.fieldName}
-                    required={field.required}
-                    type={field.fieldType}
-                    placeholder={field.placeholder}
-                    className="file-input file-input-bordered w-full" />
+                  <select
+                    onChange={(v) => handleSelectChange(field.fieldName, v.target.value)}
+                    required={field.fieldType}
+                    className="select w-full select-bordered">
+                    <option disabled selected>{field.placeholder}</option>
+                    {field?.options?.map((option, idx) => (
+                      <option
+                        key={idx}
+                        value={option.value ? option.value : option}>
+                        {option.label ? option.label : option}
+                      </option>
+                    ))}
+                  </select>
                 </div>
                 :
-                (field.fieldType == 'textarea') ?
+                (field.fieldType == 'file') ?
                   <div >
-                    <textarea
+                    <input
                       name={field.fieldName}
                       required={field.required}
                       type={field.fieldType}
                       placeholder={field.placeholder}
-                      autoComplete='off'
-                      className="textarea textarea-bordered w-full" />
+                      className="file-input file-input-bordered w-full" />
                   </div>
                   :
-                  (field.fieldType == 'radio') ?
-                    <div>
-                      {field?.options && field.options.map((option, idx) => (
-                        <label
-                          key={idx} className="label cursor-pointer justify-start">
-                          <input
-                            required={field.required}
-                            onClick={(v) => handleSelectChange(field.fieldName, v.target.value)}
-                            name={field.fieldName}
-                            type='radio'
-                            value={option.value ? option.value : option}
-                            className="radio" />
-                          <span className="label-text ml-3">{option.label ? option.label : option}</span>
-                        </label>
-                      ))}
+                  (field.fieldType == 'textarea') ?
+                    <div >
+                      <textarea
+                        name={field.fieldName}
+                        required={field.required}
+                        type={field.fieldType}
+                        placeholder={field.placeholder}
+                        autoComplete='off'
+                        className="textarea textarea-bordered w-full" />
                     </div>
                     :
-                    (field.fieldType == 'checkbox') ?
-                      <div >
-                        {field?.options ? field.options.map((option, idx) => (
+                    (field.fieldType == 'radio') ?
+                      <div>
+                        {field?.options && field.options.map((option, idx) => (
                           <label
-                            key={idx} className="label cursor-pointer justify-start ">
+                            key={idx} className="label cursor-pointer justify-start">
                             <input
                               required={field.required}
-                              onChange={(v) => handleCheckboxChange(field?.fieldLabel, option?.label ? option.label : option, v.target.value)}
-                              name={field?.fieldLabel}
-                              type='checkbox'
-                              value='true'
-                              className="checkbox checkbox-sm" />
+                              onClick={(v) => handleSelectChange(field.fieldName, v.target.value)}
+                              name={field.fieldName}
+                              type='radio'
+                              value={option.value ? option.value : option}
+                              className="radio" />
                             <span className="label-text ml-3">{option.label ? option.label : option}</span>
                           </label>
-                        )) :
-                          <div className='flex gap-3'>
-                            <input
-                              required={field.required}
-                              name={field.fieldName}
-                              type='checkbox'
-                              value='true'
-                              className="checkbox checkbox-sm" />
-                            <label>{field.fieldLabel}</label>
-                          </div>
-                        }
+                        ))}
                       </div>
                       :
-                      <div>
-                        <input
-                          onChange={(e) => handleInputChange(e)}
-                          name={field.fieldName}
-                          required={field.required}
-                          type={field.fieldType}
-                          placeholder={field.placeholder}
-                          autoComplete='off'
-                          className="input input-bordered w-full" />
-                      </div>
-            }
-          </label>
-        </div>
-      ))}
-      <button
-        type='submit'
-        className='btn rounded-full btn-primary'>Submit</button>
-    </form>
+                      (field.fieldType == 'checkbox') ?
+                        <div >
+                          {field?.options ? field.options.map((option, idx) => (
+                            <label
+                              key={idx} className="label cursor-pointer justify-start ">
+                              <input
+                                required={field.required}
+                                onChange={(v) => handleCheckboxChange(field?.fieldLabel, option?.label ? option.label : option, v.target.checked)}
+                                name={field?.fieldLabel}
+                                type='checkbox'
+                                value='{field.value}'
+                                className="checkbox checkbox-sm" />
+                              <span className="label-text ml-3">{option.label ? option.label : option}</span>
+                            </label>
+                          )) :
+                            <div className='flex gap-3'>
+                              <input
+                                required={field.required}
+                                name={field.fieldName}
+                                type='checkbox'
+                                className="checkbox checkbox-sm" />
+                              <label>{field.fieldLabel}</label>
+                            </div>
+                          }
+                        </div>
+                        :
+                        <div>
+                          <input
+                            onChange={(e) => handleInputChange(e)}
+                            name={field.fieldName}
+                            required={field.required}
+                            type={field.fieldType}
+                            placeholder={field.placeholder}
+                            autoComplete='off'
+                            className="input input-bordered w-full" />
+                        </div>
+              }
+            </label>
+          </div>
+        ))}
+        {!enableSignin ?
+          <button
+            type='submit'
+            className='btn rounded-full btn-primary'>
+            Submit
+          </button>
+          :
+          isSignedIn ?
+            <button
+              type='submit'
+              className='btn rounded-full btn-primary'>
+              Submit
+            </button>
+            :
+            <SignInButton
+              mode='modal'
+              className='btn rounded-full btn-primary'>
+              Sign In before submit</SignInButton>
+        }
+      </form>
+    </div >
   )
 }
 
