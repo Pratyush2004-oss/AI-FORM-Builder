@@ -18,8 +18,8 @@ const FormItem = ({ jsonform, formRecord, refreshData }) => {
     const onDeleteForm = async (columnName) => {
 
         await db.update(userResponse).set({
-            [columnName] : 0
-        }).where(eq(userResponse.formRef,formRecord.id))
+            [columnName]: 0
+        }).where(eq(userResponse.formRef, formRecord.id))
 
         const result = await db.delete(JsonForms)
             .where(and(eq(JsonForms.id, formRecord.id),
@@ -45,10 +45,11 @@ const FormItem = ({ jsonform, formRecord, refreshData }) => {
     }
     return (
         <div className='border w-full p-4 rounded-lg shadow-sm'>
+            <div className='flex justify-end'>
+                <Trash2 className='h-5 w-5 hover:scale-105 transition-all cursor-pointer text-red-500' onClick={() => setOpenDialog(true)} />
+            </div>
             <h2 className='font-mono font-bold text-xl p-2 flex justify-between'>
                 {jsonform.formTitle}
-
-                <Trash2 className='h-7 w-7 cursor-pointer text-red-500' onClick={() => setOpenDialog(true)} />
                 <dialog className="modal" open={openDialog}>
                     <div className="modal-box">
                         <h3 className="font-bold font-serif text-lg">Are you absolutely sure?</h3>
@@ -78,10 +79,10 @@ const FormItem = ({ jsonform, formRecord, refreshData }) => {
                     }}
                     onClick={() => console.log("shared successfully!")}
                 >
-                    <button className='flex gap-2 btn btn-sm btn-outline btn-success'><Share2 className='h-5 w-5' /> <span className='hidden lg:block'>Share</span></button>
+                    <button className='flex gap-2 btn btn-sm btn-outline btn-success'><Share2 className='h-5 w-5' /> <span className='hidden lg:inline'>Share</span></button>
                 </RWebShare>
                 <Link href={'/edit-form/' + formRecord.id}>
-                    <button className='flex gap-2 btn btn-sm btn-secondary'><Edit className='h-5 w-5' /><span className='hidden lg:block'>Edit</span></button>
+                    <button className='flex gap-2 btn btn-sm btn-secondary'><Edit className='h-5 w-5' /><span className='hidden lg:inline'>Edit</span></button>
                 </Link>
             </div>
         </div>
