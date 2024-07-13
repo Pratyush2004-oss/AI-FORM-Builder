@@ -88,14 +88,14 @@ function FormUi({ jsonForm, onFieldUpdate, deleteField, selectedTheme, selectedS
     <div>
       <form
         ref={(e) => formRef = e}
-        className='p-5 rounded-lg md:w-[600px]' data-theme={selectedTheme}
+        className='p-5 rounded-lg lg:w-[600px]' data-theme={selectedTheme}
         onSubmit={!path.includes('edit-form') ? onFormSubmit : (e) => e.preventDefault()}
         style={{
           boxShadow: selectedStyle?.key == 'boxshadow' && '5px 5px 0px black',
           border: selectedStyle?.key == 'border' && selectedStyle.value
         }}
       >
-        <h2 className='font-bold text-center text-2xl'>{jsonForm && (jsonForm?.formTitle).toUpperCase()}</h2>
+        <h2 className='font-bold text-center text-lg lg:text-2xl'>{jsonForm && (jsonForm?.formTitle).toUpperCase()}</h2>
         <h2 className='text-sm text-gray-400 text-center'>{jsonForm?.formSubheading}</h2>
 
         {jsonForm?.formFields?.map((field, idx) => (
