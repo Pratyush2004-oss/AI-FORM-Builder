@@ -112,10 +112,10 @@ const EditForm = ({ params }) => {
       >
         <div className="flex p-4 items-center">
           <div className="ml-3 flex-1">
-            <p className="text-xl font-mono text-green-500 font-bold">
-              🔥 HURRY, Successfully Updated !!🔥
+            <p className="font-mono text-green-500 font-bold">
+              🔥Successfully Updated !!🔥
             </p>
-            <p className="mt-1 text-yellow-500">
+            <p className="mt-1 text-sm text-yellow-500">
               Layout has been Changed !
             </p>
           </div>
@@ -134,21 +134,21 @@ const EditForm = ({ params }) => {
         <div className='flex gap-3 '>
           <Link href={'/aiform/' + record.id} target='_blank'>
             <h2 className='btn btn-outline btn-secondary my-2 hover:font-bold'>
-              Live Preview
+              <span className='hidden sm:block'>Live Preview</span>
               <Eye />
-            </h2>
-          </Link>
-          {jsonForm &&
-            <RWebShare
-              data={{
-                text: jsonForm?.formSubheading,
+              </h2>
+              </Link>
+              {jsonForm &&
+                <RWebShare
+                data={{
+                  text: jsonForm?.formSubheading,
                 url: process.env.NEXT_PUBLIC_BASE_URL + 'aiform/' + record.id,
                 title: jsonForm.title,
               }}
               onClick={() => console.log("shared successfully!")}
-            >
+              >
               <h2 className='btn btn-success my-2 hover:font-bold'>
-                Share
+              <span className='hidden sm:block'>Share</span>
                 <img src='/Share.png' alt='share' width={15} height={15}></img>
               </h2>
             </RWebShare>
