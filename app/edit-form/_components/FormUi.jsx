@@ -134,6 +134,7 @@ function FormUi({ jsonForm, onFieldUpdate, deleteField, selectedTheme, selectedS
                   <div >
                     <input
                       name={field.fieldName}
+                      onChange={(e) => handleInputChange(e)}
                       required={field.required}
                       type={field.fieldType}
                       placeholder={field.placeholder}
@@ -144,6 +145,7 @@ function FormUi({ jsonForm, onFieldUpdate, deleteField, selectedTheme, selectedS
                     <div >
                       <textarea
                         name={field.fieldName}
+                        onChange={(e) => handleInputChange(e)}
                         required={field.required}
                         type={field.fieldType}
                         placeholder={field.placeholder}
