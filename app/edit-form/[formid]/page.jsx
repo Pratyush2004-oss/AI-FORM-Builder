@@ -72,7 +72,7 @@ const EditForm = ({ params }) => {
 
     if (result) {
       toast.custom((t) => (
-        <div data-theme="luxury"
+        <div
           className={`${t.visible ? 'animate-enter' : 'animate-leave'
             } max-w-md w-full shadow-lg rounded-lg pointer-events-auto flex ring-1 ring-black ring-opacity-5`}
         >
@@ -106,7 +106,7 @@ const EditForm = ({ params }) => {
 
     console.log(columnName, value)
     toast.custom((t) => (
-      <div data-theme="luxury"
+      <div
         className={`${t.visible ? 'animate-enter' : 'animate-leave'
           } max-w-md w-full shadow-lg rounded-lg pointer-events-auto flex ring-1 ring-black ring-opacity-5`}
       >
