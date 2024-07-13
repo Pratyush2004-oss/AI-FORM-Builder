@@ -71,24 +71,7 @@ const EditForm = ({ params }) => {
       .returning({ id: JsonForms.id })
 
     if (result) {
-      toast.custom((t) => (
-        <div
-          className={`${t.visible ? 'animate-enter' : 'animate-leave'
-            } max-w-md w-full shadow-lg rounded-lg pointer-events-auto flex ring-1 ring-black ring-opacity-5`}
-        >
-
-          <div className="flex p-4 items-center">
-            <div className="ml-3 flex-1">
-              <p className="text-xl font-mono text-green-500 font-Bold">
-                🔥 HURRY Successfully Updated !! 🔥
-              </p>
-              <p className="mt-1 text-yellow-500">
-                Form fields has been updated Successfully !
-              </p>
-            </div>
-          </div>
-        </div>
-      ))
+      toast.success("🔥Successfully Updated !!🔥!")
     }
   }
 
@@ -104,24 +87,7 @@ const EditForm = ({ params }) => {
     }).where(and(eq(JsonForms.id, record.id),
       eq(JsonForms.createdBy, user?.primaryEmailAddress?.emailAddress)))
 
-    console.log(columnName, value)
-    toast.custom((t) => (
-      <div data-theme="light"
-        className={`${t.visible ? 'animate-enter' : 'animate-leave'
-          } max-w-md w-full shadow-lg rounded-lg pointer-events-auto flex ring-1 ring-black ring-opacity-5`}
-      >
-        <div className="flex p-4 items-center">
-          <div className="ml-3 flex-1">
-            <p className="font-mono text-green-500 font-bold">
-              🔥Successfully Updated !!🔥
-            </p>
-            <p className="mt-1 text-sm text-yellow-500">
-              Layout has been Changed !
-            </p>
-          </div>
-        </div>
-      </div>
-    ))
+    toast.success("🔥Successfully Updated !!🔥!")
   }
 
 
@@ -136,19 +102,19 @@ const EditForm = ({ params }) => {
             <h2 className='btn btn-outline btn-secondary my-2 hover:font-bold'>
               <span className='hidden sm:block'>Live Preview</span>
               <Eye />
-              </h2>
-              </Link>
-              {jsonForm &&
-                <RWebShare
-                data={{
-                  text: jsonForm?.formSubheading,
+            </h2>
+          </Link>
+          {jsonForm &&
+            <RWebShare
+              data={{
+                text: jsonForm?.formSubheading,
                 url: process.env.NEXT_PUBLIC_BASE_URL + 'aiform/' + record.id,
                 title: jsonForm.title,
               }}
               onClick={() => console.log("shared successfully!")}
-              >
+            >
               <h2 className='btn btn-success my-2 hover:font-bold'>
-              <span className='hidden sm:block'>Share</span>
+                <span className='hidden sm:block'>Share</span>
                 <img src='/Share.png' alt='share' width={15} height={15}></img>
               </h2>
             </RWebShare>
@@ -174,7 +140,7 @@ const EditForm = ({ params }) => {
             }}
             setSigninEnable={(value) => {
               updateControllerFields(value, 'enableSignIn');
-              
+
             }}
           />
         </div>
