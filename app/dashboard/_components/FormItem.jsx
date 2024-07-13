@@ -14,17 +14,22 @@ const FormItem = ({ jsonform, formRecord, refreshData }) => {
     {/* for dialog box */ }
     const [openDialog, setOpenDialog] = useState(false);
     const { user } = useUser();
+
+    {/* Delete the Data having reference  */}
+    const deleteResp = async () => {
+        const result = await db.delete(userResponse)
+        .where(eq(userResponse.formRef, formRecord.id))
+
+    }
     {/* Delete Form Functionality */ }
     const onDeleteForm = async () => {
-
-        const result1 = await db.delete(userResponse)
-            .where(eq(userResponse.formRef), formRecord.id)
+        deleteResp();
 
         const result = await db.delete(JsonForms)
             .where(and(eq(JsonForms.id, formRecord.id),
                 eq(JsonForms.createdBy, user?.primaryEmailAddress?.emailAddress)))
 
-        if (result1 && result) {
+        if (result) {
             toast.custom((t) => (
                 <div data-theme="luxury"
                     className={`${t.visible ? 'animate-enter' : 'animate-leave'
