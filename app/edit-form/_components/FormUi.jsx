@@ -38,7 +38,7 @@ function FormUi({ jsonForm, onFieldUpdate, deleteField, selectedTheme, selectedS
 
   const handleCheckboxChange = (fieldName, OptionName, value) => {
     const list = formData?.[fieldName] ? formData?.[fieldName] : [];
-    if (value === 'true') {
+    if (value) {
       list.push({
         label: OptionName,
         value: value
