@@ -39,8 +39,8 @@ const LiveAIForm = ({ params }) => {
             />
             }
             <Link href={process.env.NEXT_PUBLIC_BASE_URL}
-            className='flex gap-4 items-center bg-black px-3 text-white rounded-full py-1 fixed bottom-5 right-5 cursor-pointer'>
-            <img src='/AI-Form Logo.png' className= 'rounded-full' width={60} height={80}/>
+            className='flex gap-4 items-center bg-black px-3 text-white rounded-full py-1 fixed bottom-3 right-3 cursor-pointer'>
+            <img src='/AI-Form Logo.png' className= 'rounded-full' width={50} height={50}/>
             Build Your Own AI Form
             </Link>
         </div>
