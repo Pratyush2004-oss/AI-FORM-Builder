@@ -26,14 +26,18 @@ const Responses = () => {
                 <h2 className='text-2xl font-bold'>Responses </h2>
             </div>
 
-            <div className='px-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5'>
-                {formList.map((form, idx) => (
-                    <FormListItemResp
-                        formRecord={form}
-                        jsonForm={JSON.parse(form.jsonform)}
-                    />
+            <div className={` ${formList.length > 0 ? 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5' : ''}`}>
 
-                ))}
+                {formList.length > 0 ?
+                    formList.map((form, idx) => (
+                        <FormListItemResp
+                            formRecord={form}
+                            jsonForm={JSON.parse(form.jsonform)}
+                        />
+                    ))
+                    :
+                    <h2 className='w-full text-center text-3xl text-warning'>No Form Created, first create a new one by clicking the <strong className='text-red-700'> + Create Form</strong> button in the dashboard</h2>
+                }
             </div>
         </div>
     )
