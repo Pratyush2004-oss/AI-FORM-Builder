@@ -15,17 +15,16 @@ const FormItem = ({ jsonform, formRecord, refreshData }) => {
     const [openDialog, setOpenDialog] = useState(false);
     const { user } = useUser();
     {/* Delete Form Functionality */ }
-    const onDeleteForm = async (columnName) => {
+    const onDeleteForm = async () => {
 
-        await db.update(userResponse).set({
-            [columnName]: 0
-        }).where(eq(userResponse.formRef, formRecord.id))
+        const result1 = await db.delete(userResponse)
+            .where(eq(userResponse.formRef), formRecord.id)
 
         const result = await db.delete(JsonForms)
             .where(and(eq(JsonForms.id, formRecord.id),
                 eq(JsonForms.createdBy, user?.primaryEmailAddress?.emailAddress)))
 
-        if (result) {
+        if (result1 && result) {
             toast.custom((t) => (
                 <div data-theme="luxury"
                     className={`${t.visible ? 'animate-enter' : 'animate-leave'
@@ -58,7 +57,7 @@ const FormItem = ({ jsonform, formRecord, refreshData }) => {
                             <button className='btn btn-outline btn-error' onClick={() => setOpenDialog(false)}>Cancel</button>
                             <button className='btn btn-primary'
                                 onClick={() => {
-                                    onDeleteForm('formRef')
+                                    onDeleteForm()
                                     setOpenDialog(false)
                                 }}
                             >Continue</button>
