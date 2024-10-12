@@ -93,13 +93,13 @@ const EditForm = ({ params }) => {
 
   return (
     <div className='p-5'>
-      <div className='flex justify-between items-center'>
-        <h2 className='btn btn-ghost my-2 hover:font-bold' onClick={() => router.back()}>
+      <div className='flex items-center justify-between'>
+        <h2 className='my-2 btn btn-ghost hover:font-bold' onClick={() => router.back()}>
           <ArrowLeft /> Back
         </h2>
         <div className='flex gap-3 '>
           <Link href={'/aiform/' + record.id} target='_blank'>
-            <h2 className='btn btn-outline btn-secondary my-2 hover:font-bold'>
+            <h2 className='my-2 btn btn-outline btn-secondary hover:font-bold'>
               <span className='hidden sm:block'>Live Preview</span>
               <Eye />
             </h2>
@@ -113,7 +113,7 @@ const EditForm = ({ params }) => {
               }}
               onClick={() => console.log("shared successfully!")}
             >
-              <h2 className='btn btn-success my-2 hover:font-bold'>
+              <h2 className='my-2 btn btn-success hover:font-bold'>
                 <span className='hidden sm:block'>Share</span>
                 <img src='/Share.png' alt='share' width={15} height={15}></img>
               </h2>
@@ -122,7 +122,7 @@ const EditForm = ({ params }) => {
         </div>
 
       </div>
-      <div className='grid grid-cols-1 md:grid-cols-3 gap-5'>
+      <div className='grid grid-cols-1 gap-5 md:grid-cols-3'>
         {/* Controller */}
         <div className='p-5 border rounded-lg shadow-md'>
           <Controller
@@ -146,7 +146,7 @@ const EditForm = ({ params }) => {
         </div>
 
         {/* Form */}
-        <div className='md:col-span-2 border p-5 rounded-lg flex items-center justify-center'
+        <div className='flex items-center justify-center p-5 border rounded-lg md:col-span-2'
           style={{ backgroundImage: selectedBackground }}
         >
           <FormUi

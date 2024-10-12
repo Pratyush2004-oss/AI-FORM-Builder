@@ -12,7 +12,6 @@ const LiveAIForm = ({ params }) => {
 
     useEffect(() => {
         params && getFormData()
-
     }, [])
 
     const getFormData = async () => {
@@ -20,9 +19,10 @@ const LiveAIForm = ({ params }) => {
             .where((eq(JsonForms.id, Number(params?.formid))))
         setRecord(result[0])
         setJsonForm(JSON.parse(result[0].jsonform))
+        console.log(result);
     }
     return (
-        <div className='flex p-10 justify-center items-center'
+        <div className='flex items-center justify-center p-10'
             style={{
                 backgroundImage: record?.background
             }}
@@ -35,13 +35,13 @@ const LiveAIForm = ({ params }) => {
                 selectedTheme={record.theme}
                 editable={false}
                 formID={record.id}
-                enableSignin = {record.enableSignIn}
+                enableSignin={record.enableSignIn}
             />
             }
             <Link href={process.env.NEXT_PUBLIC_BASE_URL}
-            className='flex gap-4 items-center bg-black px-3 text-white rounded-full py-1 fixed bottom-3 right-3 cursor-pointer'>
-            <img src='/AI-Form Logo.png' className= 'rounded-full' width={50} height={50}/>
-            Build Your Own AI Form
+                className='fixed flex items-center gap-4 px-3 py-1 text-white bg-black rounded-full cursor-pointer bottom-3 right-3'>
+                <img src='/AI-Form Logo.png' className='rounded-full' width={50} height={50} />
+                Build Your Own AI Form
             </Link>
         </div>
     )

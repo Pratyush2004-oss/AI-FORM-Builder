@@ -10,7 +10,6 @@ import { usePathname } from 'next/navigation';
 import { SignInButton, useUser } from '@clerk/nextjs';
 
 function FormUi({ jsonForm, onFieldUpdate, deleteField, selectedTheme, selectedStyle, editable = true, formID = 0, enableSignin }) {
-  console.log(enableSignin)
 
   {/* PathNAme Impport */ }
   const path = usePathname();
@@ -20,7 +19,7 @@ function FormUi({ jsonForm, onFieldUpdate, deleteField, selectedTheme, selectedS
 
   const [formData, setFormData] = useState();
   let formRef = useRef();
-
+  
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({
@@ -68,9 +67,9 @@ function FormUi({ jsonForm, onFieldUpdate, deleteField, selectedTheme, selectedS
           className={`${t.visible ? 'animate-enter' : 'animate-leave'
             } max-w-md w-full shadow-lg rounded-lg pointer-events-auto flex ring-1 ring-black ring-opacity-5`}
         >
-          <div className="flex p-4 items-center">
-            <div className="ml-3 flex-1">
-              <p className="text-xl font-mono text-green-500 font-bold">
+          <div className="flex items-center p-4">
+            <div className="flex-1 ml-3">
+              <p className="font-mono text-xl font-bold text-green-500">
                 ✅Response Submitted Successfully !
               </p>
             </div>
@@ -95,14 +94,14 @@ function FormUi({ jsonForm, onFieldUpdate, deleteField, selectedTheme, selectedS
           border: selectedStyle?.key == 'border' && selectedStyle.value
         }}
       >
-        <h2 className='font-bold text-center text-lg lg:text-2xl'>{jsonForm && (jsonForm?.formTitle).toUpperCase()}</h2>
-        <h2 className='text-sm text-gray-400 text-center'>{jsonForm?.formSubheading}</h2>
+        <h2 className='text-lg font-bold text-center lg:text-2xl'>{jsonForm && (jsonForm?.formTitle).toUpperCase()}</h2>
+        <h2 className='text-sm text-center text-gray-400'>{jsonForm?.formSubheading}</h2>
 
         {jsonForm?.formFields?.map((field, idx) => (
           <div className='my-3' key={idx}>
             <label className="w-full">
-              <div className="label relative">
-                <span className="label-text font-mono font-bold">{field.fieldLabel}{(field.required) && <span className='text-red-500 font-bold'> *</span>}</span>
+              <div className="relative label">
+                <span className="font-mono font-bold label-text">{field.fieldLabel}{(field.required) && <span className='font-bold text-red-500'> *</span>}</span>
                 <div>
                   {editable &&
                     <FormEdit
@@ -118,7 +117,7 @@ function FormUi({ jsonForm, onFieldUpdate, deleteField, selectedTheme, selectedS
                   <select
                     onChange={(v) => handleSelectChange(field.fieldName, v.target.value)}
                     required={field.fieldType}
-                    className="select w-full select-bordered">
+                    className="w-full select select-bordered">
                     <option disabled selected>{field.placeholder}</option>
                     {field?.options?.map((option, idx) => (
                       <option
@@ -138,7 +137,7 @@ function FormUi({ jsonForm, onFieldUpdate, deleteField, selectedTheme, selectedS
                       required={field.required}
                       type={field.fieldType}
                       placeholder={field.placeholder}
-                      className="file-input file-input-bordered w-full" />
+                      className="w-full file-input file-input-bordered" />
                   </div>
                   :
                   (field.fieldType == 'textarea') ?
@@ -150,14 +149,14 @@ function FormUi({ jsonForm, onFieldUpdate, deleteField, selectedTheme, selectedS
                         type={field.fieldType}
                         placeholder={field.placeholder}
                         autoComplete='off'
-                        className="textarea textarea-bordered w-full" />
+                        className="w-full textarea textarea-bordered" />
                     </div>
                     :
                     (field.fieldType == 'radio') ?
                       <div>
                         {field?.options && field.options.map((option, idx) => (
                           <label
-                            key={idx} className="label cursor-pointer justify-start">
+                            key={idx} className="justify-start cursor-pointer label">
                             <input
                               required={field.required}
                               onClick={(v) => handleSelectChange(field.fieldName, v.target.value)}
@@ -165,7 +164,7 @@ function FormUi({ jsonForm, onFieldUpdate, deleteField, selectedTheme, selectedS
                               type='radio'
                               value={option.value ? option.value : option}
                               className="radio" />
-                            <span className="label-text ml-3">{option.label ? option.label : option}</span>
+                            <span className="ml-3 label-text">{option.label ? option.label : option}</span>
                           </label>
                         ))}
                       </div>
@@ -174,7 +173,7 @@ function FormUi({ jsonForm, onFieldUpdate, deleteField, selectedTheme, selectedS
                         <div >
                           {field?.options ? field.options.map((option, idx) => (
                             <label
-                              key={idx} className="label cursor-pointer justify-start ">
+                              key={idx} className="justify-start cursor-pointer label ">
                               <input
                                 required={field.required}
                                 onChange={(v) => handleCheckboxChange(field?.fieldLabel, option?.label ? option.label : option, v.target.checked)}
@@ -182,7 +181,7 @@ function FormUi({ jsonForm, onFieldUpdate, deleteField, selectedTheme, selectedS
                                 type='checkbox'
                                 value='{field.value}'
                                 className="checkbox checkbox-sm" />
-                              <span className="label-text ml-3">{option.label ? option.label : option}</span>
+                              <span className="ml-3 label-text">{option.label ? option.label : option}</span>
                             </label>
                           )) :
                             <div className='flex gap-3'>
@@ -204,7 +203,7 @@ function FormUi({ jsonForm, onFieldUpdate, deleteField, selectedTheme, selectedS
                             type={field.fieldType}
                             placeholder={field.placeholder}
                             autoComplete='off'
-                            className="input input-bordered w-full" />
+                            className="w-full input input-bordered" />
                         </div>
               }
             </label>
@@ -213,20 +212,20 @@ function FormUi({ jsonForm, onFieldUpdate, deleteField, selectedTheme, selectedS
         {!enableSignin ?
           <button
             type='submit'
-            className='btn rounded-full btn-primary'>
+            className='rounded-full btn btn-primary'>
             Submit
           </button>
           :
           isSignedIn ?
             <button
               type='submit'
-              className='btn rounded-full btn-primary'>
+              className='rounded-full btn btn-primary'>
               Submit
             </button>
             :
             <SignInButton
               mode='modal'
-              className='btn rounded-full btn-primary'>
+              className='rounded-full btn btn-primary'>
               Sign In before submit</SignInButton>
         }
       </form>
